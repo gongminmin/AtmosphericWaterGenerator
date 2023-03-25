@@ -1,1 +1,3 @@
-3DModel/*.gcode
+3DModel/*.gcode
+Circuit/*-backups
+Circuit/*.kicad_prl
