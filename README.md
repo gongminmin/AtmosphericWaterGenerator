@@ -27,6 +27,7 @@ Most of the components are off-shelve ones. They are mounted to a frame by 3D pr
 
 * 3DModel folder is the 3D model design of some components. It's in STL format, ready for 3D printing.
 * Circuit folder is the electric design of the system. The files can be open by [KiCad](https://kicad-pcb.org/)
+* Code folder is the Arduino code for the control module.
 * Doc folder contains some documents
 
 ## License
