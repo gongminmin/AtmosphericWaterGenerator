@@ -26,4 +26,4 @@ Assemble them together, this is our MK2. We use pipes as the frame, MDF as platf
 
 ## Conclusion
 
-In MK2, the only manual work is pipe fitting and drilling. It's much more compact than MK1, with better replicability and stability. Problems in MK1 have been solved. In the next iteration, we'll build the circuit part, and start the overall testing.
+In MK2, the only manual work is pipe fitting and drilling. It's much more compact than MK1, with better replicability and stability. Problems in MK1 have been solved. In the next iteration, we'll build the circuit part, and start the overall testing. Also, the barycenter of this device is too high, makes it have the risk of tipping over. It needs to be improved as well.
