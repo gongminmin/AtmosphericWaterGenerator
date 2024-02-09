@@ -1,3 +1,4 @@
 3DModel/*.gcode
 Circuit/*-backups
 Circuit/*.kicad_prl
+Circuit/fp-info-cache
