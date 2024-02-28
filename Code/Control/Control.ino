@@ -1,14 +1,22 @@
-#include <LiquidCrystal.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+constexpr uint32_t DisplayAddr = 0x3C;
 
 constexpr int TemperatureSensorReadPin = A0;
 constexpr int SensorsPowerPin = 7;
 constexpr int CoolingPlatePin = 6;
 
-LiquidCrystal& GetLcd()
+Adafruit_SSD1306& GetDisplay()
 {
-  constexpr int Rs = 12, En = 11, D4 = 5, D5 = 4, D6 = 3, D7 = 2;
-  static LiquidCrystal lcd(Rs, En, D4, D5, D6, D7);
-  return lcd;
+  constexpr uint32_t ScreenWidth = 128;
+  constexpr uint32_t ScreenHeight = 64;
+  constexpr int OledReset = -1;
+
+  // Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+  static Adafruit_SSD1306 display(ScreenWidth, ScreenHeight, &Wire, OledReset);
+  return display;
 }
 
 float ReadTemperature(int temperature_sensor)
@@ -66,7 +74,21 @@ bool TriggerState(float value, float lower_bound, float upper_bound, bool curr_s
 
 void setup()
 {
-  GetLcd().begin(16, 2);
+  Adafruit_SSD1306& display = GetDisplay();
+
+  Serial.begin(9600);
+  if (!display.begin(SSD1306_SWITCHCAPVCC, DisplayAddr)) {
+    Serial.println("SSD1306 allocation failed");
+    for (;;)
+    {
+    }
+  }
+
+  delay(2000);
+
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.display();
 
   pinMode(CoolingPlatePin, OUTPUT);
 
@@ -76,7 +98,7 @@ void setup()
 
 void loop()
 {
-  LiquidCrystal& lcd = GetLcd();
+  Adafruit_SSD1306& display = GetDisplay();
 
   digitalWrite(SensorsPowerPin, HIGH);
   delay(10);
@@ -87,13 +109,16 @@ void loop()
 
   float temperature = ReadTemperature(temperature_sensor);
 
-  lcd.setCursor(0, 0);
-  lcd.print(temperature);
-  lcd.setCursor(8, 0);
-  lcd.print("C");
+  display.clearDisplay();
+  display.setCursor(0, 16);
+  display.print(temperature);
+  display.print(" ");
+  display.print(static_cast<char>(247));
+  display.print("C");
 
-  lcd.setCursor(0, 1);
-  lcd.print(millis() / 1000.0f);
+  display.setCursor(0, 32);
+  display.print(millis() / 1000.0f);
+  display.display(); 
 
   constexpr float temperature_lower_bound = 14;
   constexpr float temperature_upper_bound = temperature_lower_bound + 5;
