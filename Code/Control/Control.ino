@@ -84,9 +84,8 @@ void setup()
     }
   }
 
-  delay(2000);
-
-  display.setTextSize(1);
+  display.clearDisplay();
+  display.setTextSize(2);
   display.setTextColor(WHITE);
   display.display();
 
@@ -110,15 +109,14 @@ void loop()
   float temperature = ReadTemperature(temperature_sensor);
 
   display.clearDisplay();
-  display.setCursor(0, 16);
+  display.setCursor(0, 8);
   display.print(temperature);
-  display.print(" ");
   display.print(static_cast<char>(247));
   display.print("C");
 
-  display.setCursor(0, 32);
+  display.setCursor(0, 40);
   display.print(millis() / 1000.0f);
-  display.display(); 
+  display.display();
 
   constexpr float temperature_lower_bound = 14;
   constexpr float temperature_upper_bound = temperature_lower_bound + 5;
@@ -126,5 +124,5 @@ void loop()
   cooling_plate_on = TriggerState(temperature, temperature_lower_bound, temperature_upper_bound, cooling_plate_on); 
   digitalWrite(CoolingPlatePin, cooling_plate_on ? HIGH : LOW);
 
-  delay(200);
+  delay(500);
 }
