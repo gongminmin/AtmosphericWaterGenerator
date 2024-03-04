@@ -19,7 +19,7 @@ Adafruit_SSD1306& GetDisplay()
   return display;
 }
 
-float ReadTemperature(int temperature_sensor)
+float CalcTemperature(int temperature_sensor)
 {
   constexpr float Voltage = 5;
   constexpr int AdcLevels = 1023;
@@ -106,7 +106,7 @@ void loop()
 
   digitalWrite(SensorsPowerPin, LOW);
 
-  float temperature = ReadTemperature(temperature_sensor);
+  float temperature = CalcTemperature(temperature_sensor);
 
   display.clearDisplay();
   display.setCursor(0, 8);
@@ -116,13 +116,20 @@ void loop()
 
   display.setCursor(0, 40);
   display.print(millis() / 1000.0f);
-  display.display();
 
-  constexpr float temperature_lower_bound = 14;
-  constexpr float temperature_upper_bound = temperature_lower_bound + 5;
+  constexpr float TemperatureLowerBound = 14;
+  constexpr float TemperatureUpperBound = TemperatureLowerBound + 5;
   static bool cooling_plate_on = true;
-  cooling_plate_on = TriggerState(temperature, temperature_lower_bound, temperature_upper_bound, cooling_plate_on); 
+  cooling_plate_on = TriggerState(temperature, TemperatureLowerBound, TemperatureUpperBound, cooling_plate_on); 
   digitalWrite(CoolingPlatePin, cooling_plate_on ? HIGH : LOW);
+
+  if (cooling_plate_on)
+  {
+    display.setCursor(108, 32);
+    display.print('C');
+  }
+
+  display.display();
 
   delay(500);
 }
