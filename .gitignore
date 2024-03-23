@@ -2,3 +2,4 @@
 Circuit/*-backups
 Circuit/*.kicad_prl
 Circuit/fp-info-cache
+Circuit/Gerbers

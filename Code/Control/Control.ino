@@ -7,10 +7,10 @@
 constexpr uint32_t DisplayAddr = 0x3C;
 
 constexpr int TemperatureSensorReadPin = A0;
-constexpr int SensorsPowerPin = 7;
-constexpr int CoolingPlatePin = 6;
+constexpr int SensorsPowerPin = 13;
+constexpr int CoolingPlatePin = 2;
 
-constexpr int DhtPin = 5;
+constexpr int DhtPin = 9;
 
 Adafruit_SSD1306& GetDisplay()
 {
